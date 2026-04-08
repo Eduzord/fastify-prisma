@@ -1,14 +1,27 @@
 import type { User, UserRepository, UserCreate } from "../interfaces/user.interface.js";
+import { prisma } from "../database/prisma-client.js";
+export class UserRepositoryPrisma implements UserRepository {
 
-class UserRepositoryPrisma implements UserRepository {
-
-    async create(user: UserCreate): Promise<User> {
-        throw new Error("Method not implemented."); 
+    async create(data: UserCreate): Promise<User> {
+        const result = await prisma.user.create({
+            data: {
+                name: data.name,
+                email: data.email,
+            },
+        });
+        return result;
+         
     }
 
 
     async findByEmail(email: string): Promise<User | null> {
-        throw new Error("Method not implemented."); 
+        const result = await prisma.user.findUnique({
+            where: {
+                email,
+            },
+        });
+        return result;
+        
     }
 
 

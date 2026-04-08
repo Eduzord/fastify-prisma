@@ -17,6 +17,9 @@ no package.json adicionar em scripts:
 # Executando o prisma
 npx prisma init --datasource-provider sqlite --output ../generated/prisma
 
+# Dar npx prisma generate para resolver erros de PrismaClient
+
+
 
 # Aplicando as migrations no prisma
 npx prisma migrate dev --name init

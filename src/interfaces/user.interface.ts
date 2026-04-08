@@ -4,12 +4,11 @@ export interface User {
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    contacts: Contact[];
 }
 
 export interface UserCreate {
-    email: string;
     name: string;
+    email: string;
     
 }
 
