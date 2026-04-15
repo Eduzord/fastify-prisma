@@ -34,13 +34,14 @@ export class ContactRepositoryPrisma implements ContactRepository{
         return result || null;
     }
 
-    async delete(id: string): Promise<void> {
-        await prisma.contacts.delete({
+    async findAllContacts(userId: string): Promise<Contact[]> {
+        const result = await prisma.contacts.findMany({
             where: {
-                id,
+                userId,
             }
         });
-    }   
+        return result;
+    }
 
     async update(id: string, contact: Partial<Contact>): Promise<Contact> {
         const data : any = {};
@@ -56,4 +57,15 @@ export class ContactRepositoryPrisma implements ContactRepository{
         });
         return result;
     }
+    async delete(id: string): Promise<boolean> {
+
+        const result = await prisma.contacts.delete({
+            where: {
+                id,
+            }
+        });
+
+        return result ? true : false;
+    }   
+
 }

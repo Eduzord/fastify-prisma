@@ -13,6 +13,11 @@ export class UserRepositoryPrisma implements UserRepository {
          
     }
 
+    async findAll(): Promise<User[]> {
+        const result = await prisma.user.findMany();
+        return result;
+    }
+
 
     async findByEmail(email: string): Promise<User | null> {
         const result = await prisma.user.findUnique({
@@ -20,9 +25,11 @@ export class UserRepositoryPrisma implements UserRepository {
                 email,
             },
         });
-        return result;
+        return result || null;
         
     }
+
+    
 
 
     async  findById(id: string): Promise<User | null> {

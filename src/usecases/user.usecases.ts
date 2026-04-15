@@ -16,4 +16,9 @@ export class UserUseCase {
         return result;
     }
 
+    async listAllUsers(): Promise<User[]> {
+        const result = await this.userRepository.findAll();
+        return result;
+    }
+
 }

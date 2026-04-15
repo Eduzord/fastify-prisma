@@ -18,7 +18,25 @@ export async function userRoutes(fastify: FastifyInstance) {
     });
 
 fastify.get("/", async (request, reply) => {
-    return reply.send({message: "Hello World"});   
+    try {
+        const data = await userUseCase.listAllUsers();
+        return reply.send(data);
+    } catch (error) {
+        return reply.status(400).send({ message: error instanceof Error ? error.message : "Unexpected error" });
+    }
+});
+
+fastify.delete("/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const user = await userRepository.findById(id);
+
+    if (!user) {
+        return reply.status(404).send({ message: "User not found" });
+    }
+
+    await userRepository.delete(id);
+    return reply.status(200).send({ message: "User deleted successfully" });
+
 });
 
 }
